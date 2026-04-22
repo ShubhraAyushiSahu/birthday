@@ -17,49 +17,59 @@ body {
 
 /* Slideshow */
 .slideshow {
-    width: 100%;
-    height: 60vh;
+    width: 92%;
+    height: 70vh;
+    margin: 20px auto;
     overflow: hidden;
     position: relative;
+    border-radius: 15px;
 }
 
+/* Image styling */
 .slide {
     position: absolute;
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center; /* FIXES CENTER */
     opacity: 0;
-    transition: opacity 1.5s ease-in-out;
+    transform: scale(1);
+    transition: opacity 1.5s ease-in-out, transform 6s ease;
 }
 
+/* Active slide */
 .active {
     opacity: 1;
+    transform: scale(1.08); /* subtle zoom */
 }
 
 /* Content */
 .container {
-    padding: 20px;
+    padding: 15px 20px;
 }
 
 #typing {
-    font-size: 17px;
-    line-height: 1.6;
+    font-size: 16px;
+    line-height: 1.7;
 }
 
 /* Button */
 button {
     margin-top: 20px;
-    padding: 10px 22px;
+    padding: 12px 25px;
     border: none;
     border-radius: 25px;
     background: white;
     color: #ff4d6d;
     font-size: 15px;
+    cursor: pointer;
 }
 
+/* Surprise */
 .hidden {
     display: none;
     margin-top: 15px;
+    font-size: 16px;
 }
 
 /* Hearts */
@@ -69,6 +79,7 @@ button {
     animation: float 6s linear infinite;
     color: rgba(255,255,255,0.7);
 }
+
 @keyframes float {
     0% { transform: translateY(0); }
     100% { transform: translateY(-100vh); }
@@ -101,7 +112,7 @@ button {
     <button onclick="showSurprise()">Tap for Surprise 🎁</button>
 
     <div class="hidden" id="surprise">
-        💌 You are rare. You are magic. And I’m lucky to have you ❤️
+        💌 BAs itna hi tha ...baki cheezo me error aa gaya ❤️
     </div>
 </div>
 
@@ -126,9 +137,9 @@ setInterval(() => {
     slides[index].classList.remove("active");
     index = (index + 1) % slides.length;
     slides[index].classList.add("active");
-}, 3000);
+}, 3500);
 
-// Hearts
+// Hearts animation
 function createHearts() {
     const heart = document.createElement("div");
     heart.classList.add("heart");

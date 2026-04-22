@@ -10,70 +10,76 @@ body {
     margin: 0;
     font-family: 'Segoe UI', sans-serif;
     text-align: center;
-    background: linear-gradient(to top, #ff758c, #ff7eb3);
+    background: black;
     color: white;
-    overflow-x: hidden;
+    overflow: hidden;
 }
 
-/* Slideshow */
+/* Slideshow container */
 .slideshow {
     width: 100%;
     height: 100vh;
-    margin: 0;
-    overflow: hidden;
     position: relative;
+    overflow: hidden;
 }
 
-/* Image styling */
-.slide {
+/* Each slide */
+.slide-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 1.5s ease-in-out;
+}
+
+.active {
+    opacity: 1;
+}
+
+/* Blurred background */
+.bg {
     position: absolute;
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center; /* FIXES CENTER */
-    opacity: 0;
-    transform: scale(1);
-    transition: opacity 1.5s ease-in-out, transform 6s ease;
+    filter: blur(25px);
+    transform: scale(1.2);
 }
 
-/* Active slide */
-.active {
-    opacity: 1;
-    transform: scale(1.08); /* subtle zoom */
+/* Main image (perfectly centered) */
+.main-img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-height: 90%;
+    max-width: 95%;
+    border-radius: 15px;
 }
 
-/* Content */
+/* Content overlay */
 .container {
-     position: absolute;
-    bottom: 30px;
+    position: absolute;
+    bottom: 20px;
     width: 100%;
     padding: 20px;
-    background: rgba(0,0,0,0.3); /* slight dark overlay */
-
+    background: rgba(0,0,0,0.4);
 }
 
 #typing {
     font-size: 16px;
-    line-height: 1.7;
+    line-height: 1.6;
 }
 
 /* Button */
 button {
-    margin-top: 20px;
+    margin-top: 15px;
     padding: 12px 25px;
     border: none;
     border-radius: 25px;
     background: white;
     color: #ff4d6d;
     font-size: 15px;
-    cursor: pointer;
-}
-
-/* Surprise */
-.hidden {
-    display: none;
-    margin-top: 15px;
-    font-size: 16px;
 }
 
 /* Hearts */
@@ -100,23 +106,53 @@ button {
 
 <!-- SLIDESHOW -->
 <div class="slideshow">
-    <img src="img1.jpg.jpeg" class="slide active">
-    <img src="img2.jpg.jpg" class="slide">
-    <img src="img3.jpg.jpeg" class="slide">
-    <img src="img4.jpg.jpg" class="slide">
-    <img src="img5.jpg.jpeg" class="slide">
-    <img src="img6.jpg.jpeg" class="slide">
-    <img src="img7.jpg.jpg" class="slide">
+
+<div class="slide-container active">
+    <img src="img1.jpg.jpeg" class="bg">
+    <img src="img1.jpg.jpeg" class="main-img">
 </div>
 
+<div class="slide-container">
+    <img src="img2.jpg.jpg" class="bg">
+    <img src="img2.jpg.jpg" class="main-img">
+</div>
+
+<div class="slide-container">
+    <img src="img3.jpg.jpeg" class="bg">
+    <img src="img3.jpg.jpeg" class="main-img">
+</div>
+
+<div class="slide-container">
+    <img src="img4.jpg.jpg" class="bg">
+    <img src="img4.jpg.jpg" class="main-img">
+</div>
+
+<div class="slide-container">
+    <img src="img5.jpg.jpeg" class="bg">
+    <img src="img5.jpg.jpeg" class="main-img">
+</div>
+
+<div class="slide-container">
+    <img src="img6.jpg.jpeg" class="bg">
+    <img src="img6.jpg.jpeg" class="main-img">
+</div>
+
+<div class="slide-container">
+    <img src="img7.jpg.jpg" class="bg">
+    <img src="img7.jpg.jpg" class="main-img">
+</div>
+
+</div>
+
+<!-- TEXT -->
 <div class="container">
     <h2>Happy Birthday Purvi ❤️</h2>
     <div id="typing"></div>
 
     <button onclick="showSurprise()">Tap for Surprise 🎁</button>
 
-    <div class="hidden" id="surprise">
-        💌 BAs itna hi tha ...baki cheezo me error aa gaya....hihi ❤️
+    <div id="surprise" style="display:none;">
+        💌 Bas itna hi tha... baki me error aa gaya 😌❤️
     </div>
 </div>
 
@@ -126,15 +162,16 @@ const text = "Hey Purvi… 💖\n\nAnother year, another chapter — and somehow
 let i = 0;
 function typeWriter() {
     if (i < text.length) {
-        document.getElementById("typing").innerHTML = text.substring(0, i).replace(/\n/g, "<br>");
+        document.getElementById("typing").innerHTML =
+        text.substring(0, i).replace(/\n/g, "<br>");
         i++;
         setTimeout(typeWriter, 25);
     }
 }
 typeWriter();
 
-// Slideshow
-let slides = document.querySelectorAll(".slide");
+/* Slideshow */
+let slides = document.querySelectorAll(".slide-container");
 let index = 0;
 
 setInterval(() => {
@@ -143,7 +180,7 @@ setInterval(() => {
     slides[index].classList.add("active");
 }, 3500);
 
-// Hearts animation
+/* Hearts */
 function createHearts() {
     const heart = document.createElement("div");
     heart.classList.add("heart");
